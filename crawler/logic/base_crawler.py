@@ -1,13 +1,12 @@
 import asyncio
 from random import choice
-from typing import List, Iterator
+from typing import List
 
 import httpx
 
 from crawler.helpers.logger import logger
 from crawler.options.endpoints import SINGLE_PRODUCT_ENDPOINT
 from crawler.options.settings import USER_AGENTS
-from crawler.helpers.mapper import generate_ids_map
 
 
 class BaseApiCrawler:
@@ -37,8 +36,7 @@ class BaseApiCrawler:
         headers = {"User-Agent": f"{self.user_agent}"}
         try:
             res = httpx.get(url, timeout=10, headers=headers)
-            response = res.json()
-            return response
+            return res.json()
         except httpx._exceptions.TimeoutException:
             self.logger.error("Connection was timed out.")
             return None
@@ -59,9 +57,8 @@ class BaseApiCrawler:
         """
         headers = {"User-Agent": f"{self.user_agent}"}
         try:
-            resp = await client.get(url, headers=headers)
-            response = resp.json()
-            return response
+            res = await client.get(url, headers=headers)
+            return res.json()
         except Exception as e:
             self.logger.error(f"(async get) Exception: {e}")
             return None
@@ -71,6 +68,7 @@ class BaseApiCrawler:
         Sends requests to SINGLE_PRODUCT_ENDPOINT,
         if there is a response we found a product.
         """
+
         async with httpx.AsyncClient() as client:
 
             tasks = []

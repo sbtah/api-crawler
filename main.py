@@ -1,9 +1,10 @@
-from crawler.logic.base_crawler import BaseApiCrawler
 import asyncio
-from crawler.options.endpoints import SINGLE_PRODUCT_ENDPOINT
+
 from crawler.helpers.logger import logger
 from crawler.helpers.mapper import generate_ids_map
 from crawler.helpers.time_it import calculate_time
+from crawler.logic.base_crawler import BaseApiCrawler
+from crawler.options.endpoints import SINGLE_PRODUCT_ENDPOINT
 
 
 @calculate_time
@@ -18,6 +19,8 @@ def search_all_products():
             if x:
                 pid = x["data"]["entity_id"]
                 print(pid)
+            else:
+                print(f"{x}...")
 
 
 if __name__ == "__main__":

@@ -1,9 +1,10 @@
-from crawler.logic.base_crawler import BaseApiCrawler
-from crawler.helpers.logger import logger
-from crawler.options.endpoints import SINGLE_PRODUCT_ENDPOINT
-import httpx
 import asyncio
-from typing import List, Dict, Iterator
+from typing import Dict, Iterator, List
+
+import httpx
+
+from crawler.logic.base_crawler import BaseApiCrawler
+from crawler.options.endpoints import SINGLE_PRODUCT_ENDPOINT
 
 
 class ApiCrawler(BaseApiCrawler):
@@ -18,10 +19,15 @@ class ApiCrawler(BaseApiCrawler):
         """"""
         pass
 
-    async def search_products_by_ids(self, range_of_ids: Iterator[int]) -> Dict:
+    async def discover_products_by_ids(
+        self,
+        range_of_ids: Iterator[int],
+    ) -> Dict:
         """
         Sends requests to SINGLE_PRODUCT_ENDPOINT,
         if there is a response we found a product.
+        - :param range_of_ids: Iterator of integers that will be looped over,
+            to search for products.
         """
         async with httpx.AsyncClient() as client:
 
