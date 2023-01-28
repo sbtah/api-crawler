@@ -20,13 +20,14 @@ class ApiCrawler(BaseApiCrawler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def get_local_stores(self) -> List[Dict]:
+    def get_local_stores(self, local_stores_endpoint: str) -> List[Dict]:
         """
-        Requests LOCAL_STORES_ENDPOINT synchronously.
+        Requests local_stores_endpoint synchronously.
         Returns List of dictionaries with data of local stores.
+        - :arg local_stores_endpoint: API Url with LocalStores data.
         """
         try:
-            local_stores = self.get(url=LOCAL_STORES_ENDPOINT)
+            local_stores = self.get(url=local_stores_endpoint)
             return local_stores
         except Exception as e:
             self.logger.error(f"(get_local_stores) Exception: {e}")
