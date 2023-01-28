@@ -1,6 +1,6 @@
 from random import choice
 from typing import List
-
+import asyncio
 import httpx
 
 from crawler.helpers.logger import logger
@@ -60,7 +60,8 @@ class BaseApiCrawler:
         headers = {"User-Agent": f"{self.user_agent}"}
         try:
             res = await client.get(url, headers=headers)
-            return res.json()
+            await asyncio.sleep(0.5)
+            return res
         except Exception as e:
             self.logger.error(f"(async_get) Exception: {e}")
             return None
